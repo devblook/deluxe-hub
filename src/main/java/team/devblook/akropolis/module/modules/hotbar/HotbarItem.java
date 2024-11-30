@@ -162,6 +162,19 @@ public abstract class HotbarItem implements Listener {
         }
     }
 
+    @EventHandler
+    public void onBookEdit(PlayerEditBookEvent event) {
+        Player player = event.getPlayer();
+        if (getHotbarManager().inDisabledWorld(player.getLocation())) return;
+
+        PersistentDataContainer container = event.getPreviousBookMeta().getPersistentDataContainer();
+        String keyValueInItem = container.get(NamespacedKey.minecraft("hotbar-item"), PersistentDataType.STRING);
+
+        if (keyValueInItem != null && keyValueInItem.equals(keyValue)) {
+            event.setCancelled(true);
+        }
+    }
+
     @SuppressWarnings("deprecation")
     @EventHandler
     public void hotbarItemInteract(PlayerInteractEvent event) {
