@@ -1,7 +1,7 @@
 plugins {
     java
-    id("io.github.goooler.shadow") version ("8.1.8")
-    id("io.papermc.paperweight.userdev") version ("1.7.2")
+    id("io.github.goooler.shadow") version ("8.3.5")
+    id("io.papermc.paperweight.userdev") version ("1.7.7")
 }
 
 group = "team.devblook"
