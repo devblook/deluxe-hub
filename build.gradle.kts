@@ -29,7 +29,7 @@ dependencies {
 
     implementation("net.megavex:scoreboard-library-api:2.2.2")
     runtimeOnly("net.megavex:scoreboard-library-implementation:2.2.2")
-    runtimeOnly("net.megavex:scoreboard-library-modern:2.1.2:mojmap")
+    runtimeOnly("net.megavex:scoreboard-library-modern:2.2.2:mojmap")
 
     //compileOnly("org.spongepowered:configurate-yaml:4.1.2")
 
