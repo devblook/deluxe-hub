@@ -52,7 +52,9 @@ public class ChatGroups extends Module {
             return;
         }
 
-        groupsSection.getKeys(false).forEach(groupName -> chatGroups.put(groupName, new ChatGroup(groupName,
+        groupsSection.getKeys(false).stream()
+                .filter(key -> !key.equals("enabled"))
+                .forEach(groupName -> chatGroups.put(groupName, new ChatGroup(groupName,
                 groupsSection.getString(groupName + ".format", "No format."),
                 groupsSection.getInt(groupName + ".cooldown.time", 0),
                 groupsSection.getString(groupName + ".cooldown.message", "No cooldown message."))));
