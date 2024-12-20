@@ -81,5 +81,4 @@ permissions:
   akropolis.chat.group.*:
     description: Determines which chat format and cooldown time should be used
     children:
-      akropolis.chat.group.default:
-        default: true
+      akropolis.chat.group.default: true
