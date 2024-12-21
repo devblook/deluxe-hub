@@ -129,14 +129,12 @@ public class HotbarManager extends Module {
         if (inDisabledWorld(player.getLocation())) return;
 
         hotbarItems.forEach(hotbarItem -> hotbarItem.giveItem(player));
-        players.add(player.getUniqueId());
     }
 
     public void removeItemsFromPlayer(Player player) {
         if (inDisabledWorld(player.getLocation())) return;
 
         hotbarItems.forEach(hotbarItem -> hotbarItem.removeItem(player));
-        players.remove(player.getUniqueId());
     }
 
     public boolean hasHotbar(UUID playerUuid) {
@@ -145,5 +143,9 @@ public class HotbarManager extends Module {
 
     public List<HotbarItem> getHotbarItems() {
         return hotbarItems;
+    }
+
+    public Set<UUID> getPlayers() {
+        return players;
     }
 }
