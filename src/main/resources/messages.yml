@@ -100,6 +100,10 @@ Messages:
     ENABLE: "<prefix> <gray>You have <yellow>enabled <gray>the scoreboard."
     DISABLE: "<prefix> <gray>You have <yellow>disabled <gray>the scoreboard."
 
+  HOTBAR:
+    ENABLE: "<prefix> <gray>You have <yellow>enabled <gray>the hotbar items."
+    DISABLE: "<prefix> <gray>You have <yellow>disabled <gray>the hotbar items."
+
   DOUBLE_JUMP:
     COOLDOWN_ACTIVE: "<prefix> <red>You must wait <yellow><time>s <red>to double jump again!"
 
