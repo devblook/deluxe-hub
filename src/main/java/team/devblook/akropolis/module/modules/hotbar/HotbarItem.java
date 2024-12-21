@@ -121,6 +121,7 @@ public abstract class HotbarItem implements Listener {
         }
 
         player.getInventory().setItem(slot, newItem);
+        hotbarManager.getPlayers().add(player.getUniqueId());
     }
 
     public void removeItem(Player player) {
@@ -135,6 +136,8 @@ public abstract class HotbarItem implements Listener {
         if (keyValueInItem != null && keyValueInItem.equals(keyValue)) {
             inventory.remove(itemInSlot);
         }
+
+        hotbarManager.getPlayers().remove(player.getUniqueId());
     }
 
     @EventHandler
