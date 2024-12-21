@@ -116,6 +116,38 @@ public class AkropolisCommand extends InjectableCommand {
         }
 
         /*
+         * Command: hotbar Description: toggles the hotbar on/off
+         */
+        else if (args[0].equalsIgnoreCase("hotbar")) {
+
+            if (!(sender instanceof Player player)) {
+                Message.CONSOLE_NOT_ALLOWED.sendFrom(sender);
+                return;
+            }
+
+            if (!sender.hasPermission(Permissions.COMMAND_HOTBAR_TOGGLE.getPermission())) {
+                Message.NO_PERMISSION.sendFrom(sender);
+                return;
+            }
+
+            if (!plugin.getModuleManager().isEnabled(ModuleType.HOTBAR_ITEMS)) {
+                sender.sendMessage(TextUtil.parse("<red>The hotbar module is not enabled in the configuration."));
+                return;
+            }
+
+            HotbarManager hotbarManager = ((HotbarManager) plugin.getModuleManager()
+                    .getModule(ModuleType.HOTBAR_ITEMS));
+
+            if (hotbarManager.hasHotbar(player.getUniqueId())) {
+                hotbarManager.removeItemsFromPlayer(player);
+                Message.HOTBAR_DISABLE.sendFrom(player);
+            } else {
+                hotbarManager.giveItemsToPlayer(player);
+                Message.HOTBAR_ENABLE.sendFrom(player);
+            }
+        }
+
+        /*
          * Command: info Description: displays useful information about the
          * configuration
          */
