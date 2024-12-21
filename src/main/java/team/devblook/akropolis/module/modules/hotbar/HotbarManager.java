@@ -64,7 +64,15 @@ public class HotbarManager extends Module {
         }
 
         if (hiderSection.getBoolean("enabled")) {
-            ItemStack item = ItemStackBuilder.getItemStack(hiderSection.getConfigurationSection("not_hidden")).build();
+            boolean playersHidden = config.getBoolean("join_settings.players_hidden", false);
+            ItemStack item;
+
+            if (playersHidden) {
+                item = ItemStackBuilder.getItemStack(hiderSection.getConfigurationSection("hidden")).build();
+            } else {
+                item = ItemStackBuilder.getItemStack(hiderSection.getConfigurationSection("not_hidden")).build();
+            }
+
             PlayerHider playerHider = new PlayerHider(this, item, hiderSection.getInt("slot"), "PLAYER_HIDER");
 
             playerHider.setAllowMovement(hiderSection.getBoolean("disable_inventory_movement"));

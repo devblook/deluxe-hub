@@ -46,23 +46,31 @@ import java.util.List;
 import java.util.UUID;
 
 public class PlayerHider extends HotbarItem {
-    private final int cooldown;
-    private final ItemStack hiddenItem;
     private final List<UUID> hidden;
+    private final ItemStack hiddenItem;
+    private final ItemStack notHiddenItem;
+    private final boolean playersHidden;
+    private final int cooldown;
 
     public PlayerHider(HotbarManager hotbarManager, ItemStack item, int slot, String keyValue) {
         super(hotbarManager, item, slot, keyValue);
         hidden = new ArrayList<>();
 
         FileConfiguration config = getHotbarManager().getConfig(ConfigType.SETTINGS);
-        ItemStack hiddenItem = ItemStackBuilder.getItemStack(config.getConfigurationSection("player_hider.hidden")).build();
-        ItemMeta hiddenItemMeta = hiddenItem.getItemMeta();
-        PersistentDataContainer hiddenItemContainer = hiddenItemMeta.getPersistentDataContainer();
 
-        hiddenItemContainer.set(NamespacedKey.minecraft("hotbar-item"), PersistentDataType.STRING, keyValue);
-        hiddenItem.setItemMeta(hiddenItemMeta);
+        ItemStack hiddenItem = ItemStackBuilder.getItemStack(config.getConfigurationSection("player_hider.hidden")).build();
+        ItemStack notHiddenItem = ItemStackBuilder.getItemStack(config.getConfigurationSection("player_hider.not_hidden")).build();
+
+        ItemMeta playerHiderMeta = hiddenItem.getItemMeta();
+        PersistentDataContainer playerHiderContainer = playerHiderMeta.getPersistentDataContainer();
+        playerHiderContainer.set(NamespacedKey.minecraft("hotbar-item"), PersistentDataType.STRING, keyValue);
+
+        hiddenItem.setItemMeta(playerHiderMeta);
+        notHiddenItem.setItemMeta(playerHiderMeta);
 
         this.hiddenItem = hiddenItem;
+        this.notHiddenItem = notHiddenItem;
+        playersHidden = config.getBoolean("join_settings.players_hidden");
         cooldown = config.getInt("player_hider.cooldown");
     }
 
@@ -91,7 +99,7 @@ public class PlayerHider extends HotbarItem {
             hidden.remove(player.getUniqueId());
             Message.PLAYER_HIDER_SHOWN.sendFrom(player);
 
-            player.getInventory().setItem(getSlot(), getItem());
+            player.getInventory().setItem(getSlot(), notHiddenItem);
         }
     }
 
@@ -121,6 +129,14 @@ public class PlayerHider extends HotbarItem {
 
             player.hidePlayer(playerToHide);
         });
+
+        if (playersHidden) {
+            for (Player player : Bukkit.getServer().getOnlinePlayers()) {
+                playerToHide.hidePlayer(player);
+            }
+
+            hidden.add(playerToHide.getUniqueId());
+        }
     }
 
     @SuppressWarnings("deprecation")
