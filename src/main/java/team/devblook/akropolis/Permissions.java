@@ -23,7 +23,7 @@ public enum Permissions {
     // Command permissions
     COMMAND_AKROPOLIS_HELP("command.help"), COMMAND_AKROPOLIS_RELOAD("command.reload"),
     COMMAND_SCOREBOARD_TOGGLE("command.scoreboard"), COMMAND_OPEN_MENUS("command.openmenu"),
-    COMMAND_HOLOGRAMS("command.holograms"),
+    COMMAND_HOLOGRAMS("command.holograms"), COMMAND_HOTBAR_TOGGLE("command.hotbar"),
 
     // Misc permissions
     COMMAND_GAMEMODE("command.gamemode"), COMMAND_GAMEMODE_OTHERS("command.gamemode.others"),

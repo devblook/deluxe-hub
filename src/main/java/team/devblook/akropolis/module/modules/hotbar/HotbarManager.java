@@ -22,6 +22,7 @@ package team.devblook.akropolis.module.modules.hotbar;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import team.devblook.akropolis.AkropolisPlugin;
 import team.devblook.akropolis.config.ConfigType;
@@ -31,11 +32,11 @@ import team.devblook.akropolis.module.modules.hotbar.items.CustomItem;
 import team.devblook.akropolis.module.modules.hotbar.items.PlayerHider;
 import team.devblook.akropolis.util.ItemStackBuilder;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class HotbarManager extends Module {
     private List<HotbarItem> hotbarItems;
+    private Set<UUID> players;
 
     public HotbarManager(AkropolisPlugin plugin) {
         super(plugin, ModuleType.HOTBAR_ITEMS);
@@ -44,6 +45,8 @@ public class HotbarManager extends Module {
     @Override
     public void onEnable() {
         hotbarItems = new ArrayList<>();
+        players = new HashSet<>();
+
         FileConfiguration config = getConfig(ConfigType.SETTINGS);
         ConfigurationSection customItemsSections = config.getConfigurationSection("custom_join_items");
 
@@ -64,7 +67,15 @@ public class HotbarManager extends Module {
         }
 
         if (hiderSection.getBoolean("enabled")) {
-            ItemStack item = ItemStackBuilder.getItemStack(hiderSection.getConfigurationSection("not_hidden")).build();
+            boolean playersHidden = config.getBoolean("join_settings.players_hidden", false);
+            ItemStack item;
+
+            if (playersHidden) {
+                item = ItemStackBuilder.getItemStack(hiderSection.getConfigurationSection("hidden")).build();
+            } else {
+                item = ItemStackBuilder.getItemStack(hiderSection.getConfigurationSection("not_hidden")).build();
+            }
+
             PlayerHider playerHider = new PlayerHider(this, item, hiderSection.getInt("slot"), "PLAYER_HIDER");
 
             playerHider.setAllowMovement(hiderSection.getBoolean("disable_inventory_movement"));
@@ -107,16 +118,34 @@ public class HotbarManager extends Module {
     }
 
     private void giveItems() {
-        Bukkit.getOnlinePlayers().stream().filter(player -> !inDisabledWorld(player.getLocation()))
-                .forEach(player -> hotbarItems.forEach(hotbarItem -> hotbarItem.giveItem(player)));
+        Bukkit.getOnlinePlayers().forEach(this::giveItemsToPlayer);
     }
 
     private void removeItems() {
-        Bukkit.getOnlinePlayers().stream().filter(player -> !inDisabledWorld(player.getLocation()))
-                .forEach(player -> hotbarItems.forEach(hotbarItem -> hotbarItem.removeItem(player)));
+        Bukkit.getOnlinePlayers().forEach(this::removeItemsFromPlayer);
+    }
+
+    public void giveItemsToPlayer(Player player) {
+        if (inDisabledWorld(player.getLocation())) return;
+
+        hotbarItems.forEach(hotbarItem -> hotbarItem.giveItem(player));
+    }
+
+    public void removeItemsFromPlayer(Player player) {
+        if (inDisabledWorld(player.getLocation())) return;
+
+        hotbarItems.forEach(hotbarItem -> hotbarItem.removeItem(player));
+    }
+
+    public boolean hasHotbar(UUID playerUuid) {
+        return players.contains(playerUuid);
     }
 
     public List<HotbarItem> getHotbarItems() {
         return hotbarItems;
+    }
+
+    public Set<UUID> getPlayers() {
+        return players;
     }
 }

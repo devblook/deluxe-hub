@@ -30,6 +30,7 @@ import team.devblook.akropolis.config.ConfigType;
 import team.devblook.akropolis.cooldown.CooldownType;
 import team.devblook.akropolis.module.Module;
 import team.devblook.akropolis.module.ModuleType;
+import team.devblook.akropolis.util.PlaceholderUtil;
 import team.devblook.akropolis.util.TextUtil;
 
 import java.util.HashMap;
@@ -52,7 +53,9 @@ public class ChatGroups extends Module {
             return;
         }
 
-        groupsSection.getKeys(false).forEach(groupName -> chatGroups.put(groupName, new ChatGroup(groupName,
+        groupsSection.getKeys(false).stream()
+                .filter(key -> !key.equals("enabled"))
+                .forEach(groupName -> chatGroups.put(groupName, new ChatGroup(groupName,
                 groupsSection.getString(groupName + ".format", "No format."),
                 groupsSection.getInt(groupName + ".cooldown.time", 0),
                 groupsSection.getString(groupName + ".cooldown.message", "No cooldown message."))));
@@ -85,8 +88,10 @@ public class ChatGroups extends Module {
             return;
         }
 
+        String rawMessage = TextUtil.raw(event.originalMessage());
+
         getPlugin().getServer().sendMessage(TextUtil.replace(currentGroup.getFormat(player),
                 "message",
-                event.originalMessage()));
+                PlaceholderUtil.setPlaceholders(rawMessage, player)));
     }
 }

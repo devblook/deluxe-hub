@@ -121,6 +121,7 @@ public abstract class HotbarItem implements Listener {
         }
 
         player.getInventory().setItem(slot, newItem);
+        hotbarManager.getPlayers().add(player.getUniqueId());
     }
 
     public void removeItem(Player player) {
@@ -135,6 +136,8 @@ public abstract class HotbarItem implements Listener {
         if (keyValueInItem != null && keyValueInItem.equals(keyValue)) {
             inventory.remove(itemInSlot);
         }
+
+        hotbarManager.getPlayers().remove(player.getUniqueId());
     }
 
     @EventHandler
@@ -159,6 +162,19 @@ public abstract class HotbarItem implements Listener {
             if (keyValueInItem != null && keyValueInItem.equals(keyValue)) {
                 event.setCancelled(true);
             }
+        }
+    }
+
+    @EventHandler
+    public void onBookEdit(PlayerEditBookEvent event) {
+        Player player = event.getPlayer();
+        if (getHotbarManager().inDisabledWorld(player.getLocation())) return;
+
+        PersistentDataContainer container = event.getPreviousBookMeta().getPersistentDataContainer();
+        String keyValueInItem = container.get(NamespacedKey.minecraft("hotbar-item"), PersistentDataType.STRING);
+
+        if (keyValueInItem != null && keyValueInItem.equals(keyValue)) {
+            event.setCancelled(true);
         }
     }
 

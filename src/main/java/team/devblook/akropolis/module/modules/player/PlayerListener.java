@@ -129,7 +129,7 @@ public class PlayerListener extends Module {
         if (spawnHeal) {
             player.setFoodLevel(20);
 
-            AttributeInstance maxHealth = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
+            AttributeInstance maxHealth = player.getAttribute(Attribute.MAX_HEALTH);
             if (maxHealth == null) return;
 
             player.setHealth(maxHealth.getBaseValue());
