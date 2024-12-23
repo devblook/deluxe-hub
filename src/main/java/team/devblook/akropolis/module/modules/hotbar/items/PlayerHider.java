@@ -61,12 +61,16 @@ public class PlayerHider extends HotbarItem {
         ItemStack hiddenItem = ItemStackBuilder.getItemStack(config.getConfigurationSection("player_hider.hidden")).build();
         ItemStack notHiddenItem = ItemStackBuilder.getItemStack(config.getConfigurationSection("player_hider.not_hidden")).build();
 
-        ItemMeta playerHiderMeta = hiddenItem.getItemMeta();
-        PersistentDataContainer playerHiderContainer = playerHiderMeta.getPersistentDataContainer();
-        playerHiderContainer.set(NamespacedKey.minecraft("hotbar-item"), PersistentDataType.STRING, keyValue);
+        ItemMeta hiddenMeta = hiddenItem.getItemMeta();
+        PersistentDataContainer hiddenContainer = hiddenMeta.getPersistentDataContainer();
+        hiddenContainer.set(NamespacedKey.minecraft("hotbar-item"), PersistentDataType.STRING, keyValue);
 
-        hiddenItem.setItemMeta(playerHiderMeta);
-        notHiddenItem.setItemMeta(playerHiderMeta);
+        ItemMeta notHiddenMeta = notHiddenItem.getItemMeta();
+        PersistentDataContainer notHiddenContainer = notHiddenMeta.getPersistentDataContainer();
+        notHiddenContainer.set(NamespacedKey.minecraft("hotbar-item"), PersistentDataType.STRING, keyValue);
+
+        hiddenItem.setItemMeta(hiddenMeta);
+        notHiddenItem.setItemMeta(notHiddenMeta);
 
         this.hiddenItem = hiddenItem;
         this.notHiddenItem = notHiddenItem;
