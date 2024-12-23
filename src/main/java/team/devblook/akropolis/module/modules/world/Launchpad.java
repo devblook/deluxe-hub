@@ -65,16 +65,16 @@ public class Launchpad extends Module {
 
         if (rawTopBlock == null) {
             getPlugin().getLogger().severe("Launchpad' top block is missing, using air item!");
-            XMaterial.matchXMaterial("AIR").ifPresent(m -> topBlock = m.parseMaterial());
+            XMaterial.matchXMaterial("AIR").ifPresent(m -> topBlock = m.get());
         } else {
-            XMaterial.matchXMaterial(rawTopBlock).ifPresent(m -> topBlock = m.parseMaterial());
+            XMaterial.matchXMaterial(rawTopBlock).ifPresent(m -> topBlock = m.get());
         }
 
         if (rawBottomBlock == null) {
             getPlugin().getLogger().severe("Launchpad' bottom block is missing, using air item!");
-            XMaterial.matchXMaterial("AIR").ifPresent(m -> bottomBlock = m.parseMaterial());
+            XMaterial.matchXMaterial("AIR").ifPresent(m -> bottomBlock = m.get());
         } else {
-            XMaterial.matchXMaterial(rawBottomBlock).ifPresent(m -> bottomBlock = m.parseMaterial());
+            XMaterial.matchXMaterial(rawBottomBlock).ifPresent(m -> bottomBlock = m.get());
         }
     }
 

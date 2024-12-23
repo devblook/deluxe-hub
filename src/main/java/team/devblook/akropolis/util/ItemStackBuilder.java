@@ -155,7 +155,7 @@ public class ItemStackBuilder {
 
         ItemStack item = xmaterial.get().parseItem();
 
-        if (item != null && item.getType() == XMaterial.PLAYER_HEAD.parseMaterial()) {
+        if (item != null && item.getType() == XMaterial.PLAYER_HEAD.get()) {
             if (section.contains("base64")) {
                 item = ((HeadHook) PLUGIN.getHookManager().getPluginHook("BASE64"))
                         .getHead(section.getString("base64"));
