@@ -36,7 +36,6 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import team.devblook.akropolis.config.ConfigType;
 import team.devblook.akropolis.config.Message;
-import team.devblook.akropolis.cooldown.CooldownType;
 import team.devblook.akropolis.module.modules.hotbar.HotbarItem;
 import team.devblook.akropolis.module.modules.hotbar.HotbarManager;
 import team.devblook.akropolis.util.ItemStackBuilder;
@@ -61,12 +60,16 @@ public class PlayerHider extends HotbarItem {
         ItemStack hiddenItem = ItemStackBuilder.getItemStack(config.getConfigurationSection("player_hider.hidden")).build();
         ItemStack notHiddenItem = ItemStackBuilder.getItemStack(config.getConfigurationSection("player_hider.not_hidden")).build();
 
-        ItemMeta playerHiderMeta = hiddenItem.getItemMeta();
-        PersistentDataContainer playerHiderContainer = playerHiderMeta.getPersistentDataContainer();
-        playerHiderContainer.set(NamespacedKey.minecraft("hotbar-item"), PersistentDataType.STRING, keyValue);
+        ItemMeta hiddenMeta = hiddenItem.getItemMeta();
+        PersistentDataContainer hiddenContainer = hiddenMeta.getPersistentDataContainer();
+        hiddenContainer.set(NamespacedKey.minecraft("hotbar-item"), PersistentDataType.STRING, keyValue);
 
-        hiddenItem.setItemMeta(playerHiderMeta);
-        notHiddenItem.setItemMeta(playerHiderMeta);
+        ItemMeta notHiddenMeta = notHiddenItem.getItemMeta();
+        PersistentDataContainer notHiddenContainer = notHiddenMeta.getPersistentDataContainer();
+        notHiddenContainer.set(NamespacedKey.minecraft("hotbar-item"), PersistentDataType.STRING, keyValue);
+
+        hiddenItem.setItemMeta(hiddenMeta);
+        notHiddenItem.setItemMeta(notHiddenMeta);
 
         this.hiddenItem = hiddenItem;
         this.notHiddenItem = notHiddenItem;
@@ -77,8 +80,8 @@ public class PlayerHider extends HotbarItem {
     @SuppressWarnings("deprecation")
     @Override
     protected void onInteract(Player player) {
-        if (!getHotbarManager().tryCooldown(player.getUniqueId(), CooldownType.PLAYER_HIDER, cooldown)) {
-            Message.COOLDOWN_ACTIVE.sendFromWithReplacement(player, "time", Component.text(getHotbarManager().getCooldown(player.getUniqueId(), CooldownType.PLAYER_HIDER)));
+        if (!getHotbarManager().tryCooldown(player.getUniqueId(), "player_hider", cooldown)) {
+            Message.COOLDOWN_ACTIVE.sendFromWithReplacement(player, "time", Component.text(getHotbarManager().getCooldown(player.getUniqueId(), "player_hider")));
             return;
         }
 

@@ -27,7 +27,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import team.devblook.akropolis.AkropolisPlugin;
 import team.devblook.akropolis.config.ConfigType;
-import team.devblook.akropolis.cooldown.CooldownType;
 import team.devblook.akropolis.module.Module;
 import team.devblook.akropolis.module.ModuleType;
 import team.devblook.akropolis.util.PlaceholderUtil;
@@ -83,8 +82,8 @@ public class ChatGroups extends Module {
 
         event.setCancelled(true);
 
-        if (!tryCooldown(player.getUniqueId(), CooldownType.CHAT, currentGroup.getCooldownTime())) {
-            player.sendMessage(TextUtil.replace(currentGroup.getCooldownMessage(), "time", Component.text(getCooldown(player.getUniqueId(), CooldownType.CHAT))));
+        if (!tryCooldown(player.getUniqueId(), "chat", currentGroup.getCooldownTime())) {
+            player.sendMessage(TextUtil.replace(currentGroup.getCooldownMessage(), "time", Component.text(getCooldown(player.getUniqueId(), "chat"))));
             return;
         }
 
