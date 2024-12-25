@@ -19,25 +19,48 @@
 
 package team.devblook.akropolis.module.modules.hotbar.items;
 
+import net.kyori.adventure.text.Component;
+import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import team.devblook.akropolis.config.ConfigType;
+import team.devblook.akropolis.config.Message;
 import team.devblook.akropolis.module.modules.hotbar.HotbarItem;
 import team.devblook.akropolis.module.modules.hotbar.HotbarManager;
 
+import java.util.Collections;
 import java.util.List;
 
 public class CustomItem extends HotbarItem {
+    private final String key;
+    private final int cooldown;
     private final List<String> actions;
 
     public CustomItem(HotbarManager hotbarManager, ItemStack item, int slot, String key) {
         super(hotbarManager, item, slot, key);
-        actions = getPlugin().getConfigManager().getFile(ConfigType.SETTINGS).get()
-                .getStringList("custom_join_items.items." + key + ".actions");
+        this.key = key;
+
+        ConfigurationSection itemSettings = getPlugin().getConfigManager().getFile(ConfigType.SETTINGS).get()
+                .getConfigurationSection("custom_join_items.items." + key);
+
+        if (itemSettings == null) {
+            cooldown = 0;
+            actions = Collections.emptyList();
+            return;
+        }
+
+        cooldown = itemSettings.getInt("cooldown", 0);
+        actions = itemSettings.getStringList("actions");
     }
 
     @Override
     protected void onInteract(Player player) {
+        if (!getHotbarManager().tryCooldown(player.getUniqueId(), key, cooldown)) {
+            Message.COOLDOWN_ACTIVE.sendFromWithReplacement(player, "time", Component.text(getHotbarManager().getCooldown(player.getUniqueId(), key)));
+            return;
+        }
+
         getPlugin().getActionManager().executeActions(player, actions);
     }
 }
