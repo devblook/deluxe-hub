@@ -29,7 +29,6 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import team.devblook.akropolis.AkropolisPlugin;
 import team.devblook.akropolis.config.ConfigType;
-import team.devblook.akropolis.cooldown.CooldownType;
 import team.devblook.akropolis.module.Module;
 import team.devblook.akropolis.module.ModuleType;
 
@@ -97,7 +96,7 @@ public class Launchpad extends Module {
 
         // Check for launchpad block and cooldown
         if (blockLocation.getBlock().getType() == topBlock && blockLocation.subtract(0, 1, 0).getBlock().getType() == bottomBlock
-                && tryCooldown(player.getUniqueId(), CooldownType.LAUNCHPAD, 1)) {
+                && tryCooldown(player.getUniqueId(), "launchpad", 1)) {
             player.setVelocity(playerLocation.getDirection().multiply(launch).setY(launchY));
             executeActions(player, actions);
         }
