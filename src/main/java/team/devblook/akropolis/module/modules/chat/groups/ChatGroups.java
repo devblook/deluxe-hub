@@ -21,6 +21,8 @@ package team.devblook.akropolis.module.modules.chat.groups;
 
 import io.papermc.paper.event.player.AsyncChatEvent;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+import org.bukkit.ChatColor;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -29,7 +31,6 @@ import team.devblook.akropolis.AkropolisPlugin;
 import team.devblook.akropolis.config.ConfigType;
 import team.devblook.akropolis.module.Module;
 import team.devblook.akropolis.module.ModuleType;
-import team.devblook.akropolis.util.PlaceholderUtil;
 import team.devblook.akropolis.util.TextUtil;
 
 import java.util.HashMap;
@@ -65,6 +66,7 @@ public class ChatGroups extends Module {
         chatGroups.clear();
     }
 
+    @SuppressWarnings("deprecation")
     @EventHandler
     public void onPlayerChat(AsyncChatEvent event) {
         if (event.isCancelled()) return;
@@ -88,9 +90,12 @@ public class ChatGroups extends Module {
         }
 
         String rawMessage = TextUtil.raw(event.originalMessage());
+        String parsedMessage = TextUtil.raw(LegacyComponentSerializer
+                .legacySection()
+                .deserialize(ChatColor.translateAlternateColorCodes('&', rawMessage)));
 
         getPlugin().getServer().sendMessage(TextUtil.replace(currentGroup.getFormat(player),
                 "message",
-                PlaceholderUtil.setPlaceholders(rawMessage, player)));
+                TextUtil.parse(parsedMessage)));
     }
 }
