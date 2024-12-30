@@ -108,8 +108,7 @@ public class PlayerListener extends Module {
         // TODO: Refactor to follow Liskov Substitution principle.
     }
 
-    // TODO: Reduce cognitive complexity from 18 to something minor.
-    @EventHandler(priority = EventPriority.HIGH)
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
