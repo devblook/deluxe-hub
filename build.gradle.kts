@@ -1,7 +1,7 @@
 plugins {
     java
     id("com.gradleup.shadow") version ("8.3.5")
-    id("io.papermc.paperweight.userdev") version ("2.0.0-beta.8")
+    id("io.papermc.paperweight.userdev") version ("2.0.0-beta.9")
 }
 
 group = "team.devblook"
@@ -33,8 +33,8 @@ dependencies {
 
     //compileOnly("org.spongepowered:configurate-yaml:4.1.2")
 
-    compileOnly("net.kyori:adventure-text-minimessage:4.17.0")
-    compileOnly("net.kyori:adventure-api:4.17.0")
+    compileOnly("net.kyori:adventure-text-minimessage:4.18.0")
+    compileOnly("net.kyori:adventure-api:4.18.0")
 
     compileOnly("com.mojang:authlib:1.5.25")
     compileOnly("me.clip:placeholderapi:2.11.6")
