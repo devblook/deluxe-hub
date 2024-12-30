@@ -68,7 +68,7 @@ public class LobbySpawn extends Module {
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
         if (spawnJoin && location != null)
-            player.teleportAsync(location);
+            player.teleport(location);
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)

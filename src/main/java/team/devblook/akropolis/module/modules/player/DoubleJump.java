@@ -32,7 +32,6 @@ import team.devblook.akropolis.AkropolisPlugin;
 import team.devblook.akropolis.Permissions;
 import team.devblook.akropolis.config.ConfigType;
 import team.devblook.akropolis.config.Message;
-import team.devblook.akropolis.cooldown.CooldownType;
 import team.devblook.akropolis.module.Module;
 import team.devblook.akropolis.module.ModuleType;
 
@@ -92,8 +91,8 @@ public class DoubleJump extends Module {
         // Check for cooldown
         UUID uuid = player.getUniqueId();
 
-        if (!tryCooldown(uuid, CooldownType.DOUBLE_JUMP, cooldownDelay)) {
-            Message.DOUBLE_JUMP_COOLDOWN.sendFromWithReplacement(player, "time", Component.text(getCooldown(uuid, CooldownType.DOUBLE_JUMP)));
+        if (!tryCooldown(uuid, "double_jump", cooldownDelay)) {
+            Message.DOUBLE_JUMP_COOLDOWN.sendFromWithReplacement(player, "time", Component.text(getCooldown(uuid, "double_jump")));
             return;
         }
 

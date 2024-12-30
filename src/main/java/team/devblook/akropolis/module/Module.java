@@ -27,7 +27,6 @@ import org.bukkit.event.Listener;
 import team.devblook.akropolis.AkropolisPlugin;
 import team.devblook.akropolis.config.ConfigType;
 import team.devblook.akropolis.cooldown.CooldownManager;
-import team.devblook.akropolis.cooldown.CooldownType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,11 +65,11 @@ public abstract class Module implements Listener {
         return disabledWorlds.contains(world.getName());
     }
 
-    public boolean tryCooldown(UUID uuid, CooldownType type, long delay) {
+    public boolean tryCooldown(UUID uuid, String type, long delay) {
         return cooldownManager.tryCooldown(uuid, type, delay);
     }
 
-    public long getCooldown(UUID uuid, CooldownType type) {
+    public long getCooldown(UUID uuid, String type) {
         return (cooldownManager.getCooldown(uuid, type) / 1000);
     }
 
