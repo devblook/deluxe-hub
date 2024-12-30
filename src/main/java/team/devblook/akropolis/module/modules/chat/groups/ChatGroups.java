@@ -21,16 +21,16 @@ package team.devblook.akropolis.module.modules.chat.groups;
 
 import io.papermc.paper.event.player.AsyncChatEvent;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+import org.bukkit.ChatColor;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import team.devblook.akropolis.AkropolisPlugin;
 import team.devblook.akropolis.config.ConfigType;
-import team.devblook.akropolis.cooldown.CooldownType;
 import team.devblook.akropolis.module.Module;
 import team.devblook.akropolis.module.ModuleType;
-import team.devblook.akropolis.util.PlaceholderUtil;
 import team.devblook.akropolis.util.TextUtil;
 
 import java.util.HashMap;
@@ -66,6 +66,7 @@ public class ChatGroups extends Module {
         chatGroups.clear();
     }
 
+    @SuppressWarnings("deprecation")
     @EventHandler
     public void onPlayerChat(AsyncChatEvent event) {
         if (event.isCancelled()) return;
@@ -83,15 +84,18 @@ public class ChatGroups extends Module {
 
         event.setCancelled(true);
 
-        if (!tryCooldown(player.getUniqueId(), CooldownType.CHAT, currentGroup.getCooldownTime())) {
-            player.sendMessage(TextUtil.replace(currentGroup.getCooldownMessage(), "time", Component.text(getCooldown(player.getUniqueId(), CooldownType.CHAT))));
+        if (!tryCooldown(player.getUniqueId(), "chat", currentGroup.getCooldownTime())) {
+            player.sendMessage(TextUtil.replace(currentGroup.getCooldownMessage(), "time", Component.text(getCooldown(player.getUniqueId(), "chat"))));
             return;
         }
 
         String rawMessage = TextUtil.raw(event.originalMessage());
+        String parsedMessage = TextUtil.raw(LegacyComponentSerializer
+                .legacySection()
+                .deserialize(ChatColor.translateAlternateColorCodes('&', rawMessage)));
 
         getPlugin().getServer().sendMessage(TextUtil.replace(currentGroup.getFormat(player),
                 "message",
-                PlaceholderUtil.setPlaceholders(rawMessage, player)));
+                TextUtil.parse(parsedMessage)));
     }
 }

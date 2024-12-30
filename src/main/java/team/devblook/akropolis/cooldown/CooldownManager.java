@@ -25,7 +25,7 @@ import com.google.common.collect.Table;
 import java.util.UUID;
 
 public class CooldownManager {
-    private final Table<String, CooldownType, Long> cooldowns = HashBasedTable.create();
+    private final Table<String, String, Long> cooldowns = HashBasedTable.create();
 
     /**
      * Retrieve the number of milliseconds left until a given cooldown expires.
@@ -37,7 +37,7 @@ public class CooldownManager {
      * @param key  - cooldown to locate.
      * @return Number of milliseconds until the cooldown expires.
      */
-    public long getCooldown(UUID uuid, CooldownType key) {
+    public long getCooldown(UUID uuid, String key) {
         return calculateRemainder(cooldowns.get(uuid.toString(), key));
     }
 
@@ -48,7 +48,7 @@ public class CooldownManager {
      * @param key   - cooldown to update.
      * @param delay - number of milliseconds until the cooldown will expire again.
      */
-    public void setCooldown(UUID uuid, CooldownType key, long delay) {
+    public void setCooldown(UUID uuid, String key, long delay) {
         calculateRemainder(cooldowns.put(uuid.toString(), key, System.currentTimeMillis() + (delay * 1000)));
     }
 
@@ -62,7 +62,7 @@ public class CooldownManager {
      * @return TRUE if the cooldown was expired/unset and has now been reset, FALSE
      * otherwise.
      */
-    public boolean tryCooldown(UUID uuid, CooldownType key, long delay) {
+    public boolean tryCooldown(UUID uuid, String key, long delay) {
         if (getCooldown(uuid, key) / 1000 > 0)
             return false;
         setCooldown(uuid, key, delay + 1);
