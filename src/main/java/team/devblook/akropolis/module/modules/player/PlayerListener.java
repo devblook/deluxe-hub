@@ -20,9 +20,7 @@
 package team.devblook.akropolis.module.modules.player;
 
 import net.kyori.adventure.text.Component;
-import org.bukkit.Bukkit;
-import org.bukkit.Color;
-import org.bukkit.FireworkEffect;
+import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.configuration.ConfigurationSection;
@@ -45,6 +43,7 @@ import team.devblook.akropolis.util.TextUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class PlayerListener extends Module {
     private ConfigurationSection playersSection;
@@ -128,7 +127,13 @@ public class PlayerListener extends Module {
         if (spawnHeal) {
             player.setFoodLevel(20);
 
-            AttributeInstance maxHealth = player.getAttribute(Attribute.MAX_HEALTH);
+            Attribute legacyMaxHealth = Registry.ATTRIBUTE.get(NamespacedKey.minecraft("generic.max_health"));
+            Attribute maxHealthAttribute = legacyMaxHealth;
+
+            if (legacyMaxHealth == null) maxHealthAttribute = Registry.ATTRIBUTE.get(NamespacedKey.minecraft("max_health"));
+            if (maxHealthAttribute == null) return;
+
+            AttributeInstance maxHealth = player.getAttribute(maxHealthAttribute);
             if (maxHealth == null) return;
 
             player.setHealth(maxHealth.getBaseValue());
