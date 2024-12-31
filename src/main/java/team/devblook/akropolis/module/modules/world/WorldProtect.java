@@ -46,7 +46,11 @@ import team.devblook.akropolis.module.Module;
 import team.devblook.akropolis.module.ModuleType;
 import team.devblook.akropolis.module.modules.hologram.Hologram;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @SuppressWarnings({"deprecation", "ConstantConditions"})
 public class WorldProtect extends Module {
@@ -71,8 +75,8 @@ public class WorldProtect extends Module {
     private static final Set<Material> INTERACTABLE;
 
     static {
-        INTERACTABLE = Set.of(XMaterial.ANVIL.get(), XMaterial.BLACK_BED.get(), XMaterial.BLUE_BED.get(),
-                XMaterial.BROWN_BED.get(), XMaterial.CYAN_BED.get(), XMaterial.GRAY_BED.get(),
+        List<Material> rawInteractable = Arrays.asList(XMaterial.ANVIL.get(), XMaterial.BLACK_BED.get(),
+                XMaterial.BLUE_BED.get(), XMaterial.BROWN_BED.get(), XMaterial.CYAN_BED.get(), XMaterial.GRAY_BED.get(),
                 XMaterial.GREEN_BED.get(), XMaterial.LIGHT_BLUE_BED.get(), XMaterial.LIME_BED.get(),
                 XMaterial.MAGENTA_BED.get(), XMaterial.ORANGE_BED.get(), XMaterial.PINK_BED.get(),
                 XMaterial.PURPLE_BED.get(), XMaterial.RED_BED.get(), XMaterial.WHITE_BED.get(),
@@ -152,6 +156,8 @@ public class WorldProtect extends Module {
                 XMaterial.WARPED_WALL_SIGN.get(), XMaterial.PALE_OAK_HANGING_SIGN.get(),
                 XMaterial.PALE_OAK_SIGN.get(), XMaterial.PALE_OAK_WALL_HANGING_SIGN.get(),
                 XMaterial.PALE_OAK_WALL_SIGN.get());
+
+        INTERACTABLE = rawInteractable.stream().filter(Objects::nonNull).collect(Collectors.toUnmodifiableSet());
     }
 
     public WorldProtect(AkropolisPlugin plugin) {
