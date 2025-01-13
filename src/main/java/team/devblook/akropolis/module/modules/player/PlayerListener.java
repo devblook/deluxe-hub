@@ -43,7 +43,6 @@ import team.devblook.akropolis.util.TextUtil;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class PlayerListener extends Module {
     private ConfigurationSection playersSection;
@@ -51,6 +50,7 @@ public class PlayerListener extends Module {
     private String joinMessage;
     private String quitMessage;
     private List<String> joinActions;
+    private int focusedSlot;
     private boolean spawnHeal;
     private boolean extinguish;
     private boolean clearInventory;
@@ -79,6 +79,7 @@ public class PlayerListener extends Module {
 
         joinActions = config.getStringList("join_events");
 
+        focusedSlot = config.getInt("join_settings.focused_slot", 0);
         spawnHeal = config.getBoolean("join_settings.heal", false);
         extinguish = config.getBoolean("join_settings.extinguish", false);
         clearInventory = config.getBoolean("join_settings.clear_inventory", false);
@@ -122,6 +123,8 @@ public class PlayerListener extends Module {
                 event.joinMessage(message);
             }
         }
+
+        player.getInventory().setHeldItemSlot(focusedSlot);
 
         // Heal the player
         if (spawnHeal) {
