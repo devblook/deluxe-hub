@@ -3,8 +3,8 @@ authors: [ ZetaStormy, ItsLewizzz ]
 version: ${version}
 description: A modern Minecraft server hub core solution. Based on DeluxeHub by ItsLewizzz.
 api-version: "1.21"
-main: team.devblook.akropolis.AkropolisPlugin
-loader: team.devblook.akropolis.AkropolisPluginLoader
+main: me.zetastormy.akropolis.AkropolisPlugin
+loader: me.zetastormy.akropolis.AkropolisPluginLoader
 
 dependencies:
   server:
