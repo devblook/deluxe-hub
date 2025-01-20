@@ -124,7 +124,7 @@ public class PlayerListener extends Module {
             }
         }
 
-        player.getInventory().setHeldItemSlot(focusedSlot);
+        if (focusedSlot != -1) player.getInventory().setHeldItemSlot(focusedSlot);
 
         // Heal the player
         if (spawnHeal) {
