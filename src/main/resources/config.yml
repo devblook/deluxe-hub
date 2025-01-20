@@ -397,6 +397,8 @@ join_events:
   - "[EFFECT] SPEED;1"
 
 join_settings:
+  # Change the hotbar slot focused on join (must be a number between 0-9, -1 to disable)
+  focused_slot: 4
   # Decide whether players will be hidden on join or not
   players_hidden: false
   # Should we teleport the player to the spawn point (if set) on join?
