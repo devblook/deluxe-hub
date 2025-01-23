@@ -31,8 +31,6 @@ dependencies {
     runtimeOnly("net.megavex:scoreboard-library-implementation:2.2.2")
     runtimeOnly("net.megavex:scoreboard-library-modern:2.2.2:mojmap")
 
-    //compileOnly("org.spongepowered:configurate-yaml:4.1.2")
-
     compileOnly("net.kyori:adventure-text-minimessage:4.18.0")
     compileOnly("net.kyori:adventure-api:4.18.0")
 
@@ -41,6 +39,7 @@ dependencies {
     compileOnly("com.arcaniax:HeadDatabase-API:1.3.2")
     compileOnly("com.github.cryptomorin:XSeries:12.1.0")
     compileOnly("io.github.miniplaceholders:miniplaceholders-api:2.2.3")
+    compileOnly("com.github.koca2000:NoteBlockAPI:1.6.3")
 }
 
 configurations.implementation {

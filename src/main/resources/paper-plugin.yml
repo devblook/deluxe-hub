@@ -23,6 +23,9 @@ dependencies:
     MiniPlaceholders:
       load: BEFORE
       required: false
+    NoteBlockAPI:
+      load: BEFORE
+      required: false
 
 permissions:
   akropolis.*:
