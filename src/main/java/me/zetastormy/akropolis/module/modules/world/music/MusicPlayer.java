@@ -17,10 +17,25 @@
  * along with Akropolis. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package me.zetastormy.akropolis.module;
+package me.zetastormy.akropolis.module.modules.world.music;
 
-public enum ModuleType {
-    ANTI_WDL, CHAT_FORMAT, CHAT_LOCK, DOUBLE_JUMP, LAUNCHPAD, NAMETAG, SCOREBOARD, TABLIST,
-    ANNOUNCEMENTS, WORLD_PROTECT, ANTI_SWEAR, COMMAND_BLOCK, LOBBY, VANISH, HOLOGRAMS, HOTBAR_ITEMS, PLAYER_LISTENER,
-    PLAYER_OFFHAND_LISTENER, BOSS_BAR_BROADCAST, MUSIC_PLAYER
+import me.zetastormy.akropolis.AkropolisPlugin;
+import me.zetastormy.akropolis.module.Module;
+import me.zetastormy.akropolis.module.ModuleType;
+
+public class MusicPlayer extends Module {
+
+    public MusicPlayer(AkropolisPlugin plugin) {
+        super(plugin, ModuleType.MUSIC_PLAYER);
+    }
+
+    @Override
+    public void onEnable() {
+
+    }
+
+    @Override
+    public void onDisable() {
+
+    }
 }

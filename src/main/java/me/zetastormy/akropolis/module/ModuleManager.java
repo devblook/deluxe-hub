@@ -40,6 +40,7 @@ import me.zetastormy.akropolis.module.modules.world.AntiWorldDownloader;
 import me.zetastormy.akropolis.module.modules.world.Launchpad;
 import me.zetastormy.akropolis.module.modules.world.LobbySpawn;
 import me.zetastormy.akropolis.module.modules.world.WorldProtect;
+import me.zetastormy.akropolis.module.modules.world.music.MusicPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -98,6 +99,7 @@ public class ModuleManager {
         registerModule(new PlayerVanish(plugin));
         registerModule(new HologramManager(plugin));
         registerModule(new PlayerOffHandSwap(plugin), "world_settings.disable_off_hand_swap");
+        registerModule(new MusicPlayer(plugin), "music_player.enabled");
 
         for (Module module : modules.values()) {
             try {

@@ -79,6 +79,16 @@ anti_wdl:
   notify_admins: true
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+# | MUSIC PLAYER                             |
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+
+# Plays music through noteblocks using NoteBlock API. Music files are stored in nbs format inside "Akropolis/music"
+# directory.
+music_player:
+  # Should we play music in the lobby?
+  enabled: true
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 # | NAMETAG                                  |
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
