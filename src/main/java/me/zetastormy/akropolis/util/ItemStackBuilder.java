@@ -64,9 +64,6 @@ public class ItemStackBuilder {
         ItemStack item = parseMaterial(section);
         ItemStackBuilder builder = new ItemStackBuilder(item);
 
-        if (item.getType().equals(Material.BARRIER))
-            return new ItemStackBuilder(MALFORMED_ITEM);
-
         if (section.contains("amount")) {
             builder.withAmount(section.getInt("amount"));
         }
